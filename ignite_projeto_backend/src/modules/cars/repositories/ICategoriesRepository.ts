@@ -1,12 +1,12 @@
-import Category from '../models/Category';
+import Category from '../infra/typeorm/entities/Category';
 
 export interface ICreateCategoryDTO {
   name: string;
   description: string;
 }
 
-export interface ICategoriesRepository {
-  list(): Category[];
-  create(data: ICreateCategoryDTO): Category;
-  findByName(name: string): Category | undefined;
+export default interface ICategoriesRepository {
+  list(): Promise<Category[]>;
+  create(data: ICreateCategoryDTO): Promise<Category>;
+  findByName(name: string): Promise<Category | undefined>;
 }

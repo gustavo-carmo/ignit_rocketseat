@@ -1,12 +1,12 @@
-import Specification from '../models/Specification';
+import Specification from '../infra/typeorm/entities/Specification';
 
 export interface ICreateSpecificationDTO {
   name: string;
   description: string;
 }
 
-export interface ISpecificationsRepository {
-  list(): Specification[];
-  create(data: ICreateSpecificationDTO): Specification;
-  findByName(name: string): Specification | undefined;
+export default interface ISpecificationsRepository {
+  list(): Promise<Specification[]>;
+  create(data: ICreateSpecificationDTO): Promise<Specification>;
+  findByName(name: string): Promise<Specification | undefined>;
 }

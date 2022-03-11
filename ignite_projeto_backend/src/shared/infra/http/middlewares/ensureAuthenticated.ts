@@ -36,6 +36,7 @@ const ensureAuthenticated = async (
 
     request.user = {
       id: user_id,
+      is_admin: user.is_admin,
     };
 
     next();

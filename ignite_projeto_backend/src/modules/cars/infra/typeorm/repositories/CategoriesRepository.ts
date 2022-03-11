@@ -12,6 +12,12 @@ export default class CategoriesRepository implements ICategoriesRepository {
     this.repository = getRepository(Category);
   }
 
+  async findById(id: string): Promise<Category | undefined> {
+    const category = await this.repository.findOne(id);
+
+    return category;
+  }
+
   async list(): Promise<Category[]> {
     const categories = await this.repository.find();
     return categories;

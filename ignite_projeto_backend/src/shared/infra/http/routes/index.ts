@@ -3,6 +3,7 @@ import { Router } from 'express';
 import authenticateRoutes from './authenticate.routes';
 import carsRouter from './cars.routes';
 import categoriesRoutes from './categories.routes';
+import rentalsRouter from './rentals.routes';
 import specificationsRoutes from './specifications.routes';
 import usersRoutes from './users.routes';
 
@@ -13,5 +14,6 @@ routes.use('/specifications', specificationsRoutes);
 routes.use('/users', usersRoutes);
 routes.use('/session', authenticateRoutes);
 routes.use('/cars', carsRouter);
+routes.use('/rentals', rentalsRouter);
 
 export default routes;

@@ -52,8 +52,8 @@ export default class UsersRepository implements IUsersRepository {
 
     await this.repository.save(user);
 
-    delete user.password;
-
-    return user;
+    return Object.assign(user, {
+      password: '**********',
+    });
   }
 }

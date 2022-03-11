@@ -10,8 +10,6 @@ const createSpecificationController = new CreateSpecificationController();
 
 specificationRoutes.use(ensureAuthenticated);
 
-// specificationRoutes.get('/', );
-
 specificationRoutes.post('/', createSpecificationController.handle);
 
 export default specificationRoutes;

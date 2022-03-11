@@ -33,4 +33,12 @@ export default class CategoriesRepositoryInMemory
 
     return category;
   }
+
+  async findById(id: string): Promise<Category | undefined> {
+    const category = await this.categories.find(
+      (category) => category.id === id,
+    );
+
+    return category;
+  }
 }

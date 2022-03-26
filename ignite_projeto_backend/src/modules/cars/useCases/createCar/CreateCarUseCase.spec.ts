@@ -98,8 +98,8 @@ describe('Create Car', () => {
       category_id: carToCreate.category_id,
     });
 
-    expect(async () => {
-      await createCarUseCase.execute({
+    await expect(
+      createCarUseCase.execute({
         model: 'Model Car 2',
         brand: carToCreate.brand,
         description: carToCreate.description,
@@ -107,8 +107,12 @@ describe('Create Car', () => {
         daily_rate: carToCreate.daily_rate,
         fine_amount: carToCreate.fine_amount,
         category_id: carToCreate.category_id,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      }),
+    ).rejects.toEqual(
+      new AppError(
+        `Already exist a car with plate [${carToCreate.license_plate}]`,
+      ),
+    );
   });
 
   it('should not be able to create a car with a category that does not exists', async () => {
@@ -122,8 +126,8 @@ describe('Create Car', () => {
       category_id: 'category-does-not-exists',
     };
 
-    expect(async () => {
-      await createCarUseCase.execute({
+    await expect(
+      createCarUseCase.execute({
         model: carToCreate.model,
         brand: carToCreate.brand,
         description: carToCreate.description,
@@ -131,7 +135,7 @@ describe('Create Car', () => {
         daily_rate: carToCreate.daily_rate,
         fine_amount: carToCreate.fine_amount,
         category_id: carToCreate.category_id,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      }),
+    ).rejects.toEqual(new AppError('Category does not exists!'));
   });
 });

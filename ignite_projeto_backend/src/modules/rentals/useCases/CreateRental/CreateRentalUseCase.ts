@@ -35,30 +35,24 @@ export default class CreateRentalUseCase {
     const carExists = await this.carsRepository.findById(car_id);
 
     if (!carExists) {
-      throw new AppError(`Car [${car_id}] does not exists!`);
+      throw new AppError(`Car does not exists!`);
     }
 
-    const userExists = await this.usersRepository.findById(user_id);
-
-    if (!userExists) {
-      throw new AppError(`User [${user_id}] does not exists!`);
-    }
+    await this.usersRepository.findById(user_id);
 
     const carAlreadyRented = await this.rentalsRepository.findOpenedRentalByCar(
       car_id,
     );
 
     if (carAlreadyRented) {
-      throw new AppError(`Car [${car_id}] already rented!`);
+      throw new AppError(`Car already rented!`);
     }
 
     const userAlreadyRentedACar =
       await this.rentalsRepository.findOpenedRentalByUse(user_id);
 
     if (userAlreadyRentedACar) {
-      throw new AppError(
-        `User [${userAlreadyRentedACar}] already rented a car`,
-      );
+      throw new AppError(`User already rented a car!`);
     }
 
     const compareDates = this.dateProvider.compareInHours(

@@ -27,4 +27,12 @@ export default class DayjsDateProvider implements IDateProvider {
 
     return compareDates;
   }
+
+  addHours(hours: number): Date {
+    return dayjs().add(hours, 'hours').toDate();
+  }
+
+  addDays(days: number): Date {
+    return dayjs().add(days, 'days').toDate();
+  }
 }

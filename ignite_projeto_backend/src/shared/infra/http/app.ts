@@ -12,7 +12,7 @@ import createConnection from '@shared/infra/typeorm';
 import swaggerFile from '../../../swagger.json';
 import routes from './routes';
 
-createConnection();
+createConnection('172.16.238.10');
 const app = express();
 
 app.use(express.json());

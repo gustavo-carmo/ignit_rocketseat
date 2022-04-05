@@ -14,7 +14,7 @@ import createConnection from '@shared/infra/typeorm';
 import swaggerFile from '../../../swagger.json';
 import routes from './routes';
 
-createConnection('172.16.238.10');
+createConnection(process.env.DATABASE_HOST);
 const app = express();
 
 app.use(express.json());

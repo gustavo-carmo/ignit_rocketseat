@@ -10,4 +10,5 @@ export default interface IUsersTokensRepository {
   create(data: ICreateUserTokenDTO): Promise<UserToken>;
   findByIdAndRefreshToken(data: IFindUserToken): Promise<UserToken | undefined>;
   delete(id: string): Promise<void>;
+  findByRefreshToken(refresh_token: string): Promise<UserToken | undefined>;
 }

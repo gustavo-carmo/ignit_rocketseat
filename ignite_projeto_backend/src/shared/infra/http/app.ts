@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 
 import express, { NextFunction, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
@@ -6,6 +7,7 @@ import 'express-async-errors';
 
 import '@shared/container';
 
+import upload from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import createConnection from '@shared/infra/typeorm';
 
@@ -16,6 +18,9 @@ createConnection('172.16.238.10');
 const app = express();
 
 app.use(express.json());
+
+app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
+app.use('/car', express.static(`${upload.tmpFolder}/car`));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 

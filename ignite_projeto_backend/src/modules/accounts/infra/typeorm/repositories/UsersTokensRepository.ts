@@ -32,6 +32,18 @@ export default class UsersTokensRepository implements IUsersTokensRepository {
     return userToken;
   }
 
+  async findByRefreshToken(
+    refresh_token: string,
+  ): Promise<UserToken | undefined> {
+    const userToken = await this.repository.findOne({
+      where: {
+        refresh_token,
+      },
+    });
+
+    return userToken;
+  }
+
   async create({
     expires_date,
     refresh_token,

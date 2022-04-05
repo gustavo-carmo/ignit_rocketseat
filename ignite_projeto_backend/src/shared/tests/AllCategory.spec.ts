@@ -29,7 +29,7 @@ describe('All category tests!', () => {
       })
       .expect(200);
 
-    tokenAdmin = body.token;
+    tokenAdmin = body.refresh_token;
   });
 
   afterAll(async () => {

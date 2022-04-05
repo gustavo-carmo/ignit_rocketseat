@@ -4,7 +4,9 @@ import { inject, injectable } from 'tsyringe';
 import {
   expires_in_refresh_token,
   expires_in_refresh_token_days,
+  expires_in_token,
   secret_refresh_token,
+  secret_token,
 } from '@config/auth';
 import IUsersTokensRepository from '@modules/accounts/repositories/IUsersTokensRepository';
 import IDateProvider from '@shared/container/providers/DateProvider/IDateProvider';
@@ -13,6 +15,11 @@ import AppError from '@shared/errors/AppError';
 interface IPayload {
   sub: string;
   email: string;
+}
+
+interface IRefreshTokenResponse {
+  refresh_token: string;
+  token: string;
 }
 
 @injectable()
@@ -24,7 +31,7 @@ export default class RefreshTokenUseCase {
     private dateProvider: IDateProvider,
   ) {}
 
-  async execute(token: string): Promise<string> {
+  async execute(token: string): Promise<IRefreshTokenResponse> {
     const { sub: user_id, email } = verify(
       token,
       secret_refresh_token,
@@ -62,6 +69,11 @@ export default class RefreshTokenUseCase {
       user_id,
     });
 
-    return refresh_token;
+    const newToken = sign({}, secret_token, {
+      subject: user_id,
+      expiresIn: expires_in_token,
+    });
+
+    return { refresh_token, token: newToken };
   }
 }

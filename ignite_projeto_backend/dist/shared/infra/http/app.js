@@ -15,13 +15,13 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 require("express-async-errors");
 
-require("@shared/container");
+require("../../container");
 
-var _upload = _interopRequireDefault(require("@config/upload"));
+var _upload = _interopRequireDefault(require("../../../config/upload"));
 
-var _AppError = _interopRequireDefault(require("@shared/errors/AppError"));
+var _AppError = _interopRequireDefault(require("../../errors/AppError"));
 
-var _typeorm = _interopRequireDefault(require("@shared/infra/typeorm"));
+var _typeorm = _interopRequireDefault(require("../typeorm"));
 
 var _swagger = _interopRequireDefault(require("../../../swagger.json"));
 

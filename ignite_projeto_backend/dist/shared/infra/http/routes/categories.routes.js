@@ -9,11 +9,11 @@ var _express = require("express");
 
 var _multer = _interopRequireDefault(require("multer"));
 
-var _CreateCategoryController = _interopRequireDefault(require("@modules/cars/useCases/createCategory/CreateCategoryController"));
+var _CreateCategoryController = _interopRequireDefault(require("../../../../modules/cars/useCases/createCategory/CreateCategoryController"));
 
-var _ImportCategoryController = _interopRequireDefault(require("@modules/cars/useCases/importCategory/ImportCategoryController"));
+var _ImportCategoryController = _interopRequireDefault(require("../../../../modules/cars/useCases/importCategory/ImportCategoryController"));
 
-var _ListCategoriesController = _interopRequireDefault(require("@modules/cars/useCases/listCategories/ListCategoriesController"));
+var _ListCategoriesController = _interopRequireDefault(require("../../../../modules/cars/useCases/listCategories/ListCategoriesController"));
 
 var _ensureAuthenticated = _interopRequireDefault(require("../middlewares/ensureAuthenticated"));
 

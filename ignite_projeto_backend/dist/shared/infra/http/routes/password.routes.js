@@ -7,9 +7,9 @@ exports.default = void 0;
 
 var _express = require("express");
 
-var _ResetPasswordController = _interopRequireDefault(require("@modules/accounts/useCases/resetPassword/ResetPasswordController"));
+var _ResetPasswordController = _interopRequireDefault(require("../../../../modules/accounts/useCases/resetPassword/ResetPasswordController"));
 
-var _SendForgotPasswordController = _interopRequireDefault(require("@modules/accounts/useCases/sendForgotPassword/SendForgotPasswordController"));
+var _SendForgotPasswordController = _interopRequireDefault(require("../../../../modules/accounts/useCases/sendForgotPassword/SendForgotPasswordController"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

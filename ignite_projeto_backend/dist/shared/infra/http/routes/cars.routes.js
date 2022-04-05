@@ -9,15 +9,15 @@ var _express = require("express");
 
 var _multer = _interopRequireDefault(require("multer"));
 
-var _upload = _interopRequireDefault(require("@config/upload"));
+var _upload = _interopRequireDefault(require("../../../../config/upload"));
 
-var _CreateCarController = _interopRequireDefault(require("@modules/cars/useCases/createCar/CreateCarController"));
+var _CreateCarController = _interopRequireDefault(require("../../../../modules/cars/useCases/createCar/CreateCarController"));
 
-var _CreateSpecificationCarController = _interopRequireDefault(require("@modules/cars/useCases/createSpecificationCar/CreateSpecificationCarController"));
+var _CreateSpecificationCarController = _interopRequireDefault(require("../../../../modules/cars/useCases/createSpecificationCar/CreateSpecificationCarController"));
 
-var _ListAvailableCarController = _interopRequireDefault(require("@modules/cars/useCases/listCar/ListAvailableCarController"));
+var _ListAvailableCarController = _interopRequireDefault(require("../../../../modules/cars/useCases/listCar/ListAvailableCarController"));
 
-var _UploadCarImagesController = _interopRequireDefault(require("@modules/cars/useCases/uploadCarImage/UploadCarImagesController"));
+var _UploadCarImagesController = _interopRequireDefault(require("../../../../modules/cars/useCases/uploadCarImage/UploadCarImagesController"));
 
 var _ensureAuthenticated = _interopRequireDefault(require("../middlewares/ensureAuthenticated"));
 

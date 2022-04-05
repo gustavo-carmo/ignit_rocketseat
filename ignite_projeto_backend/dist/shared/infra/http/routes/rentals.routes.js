@@ -7,11 +7,11 @@ exports.default = void 0;
 
 var _express = require("express");
 
-var _CreateRentalController = _interopRequireDefault(require("@modules/rentals/useCases/CreateRental/CreateRentalController"));
+var _CreateRentalController = _interopRequireDefault(require("../../../../modules/rentals/useCases/CreateRental/CreateRentalController"));
 
-var _DevolutionRentalController = _interopRequireDefault(require("@modules/rentals/useCases/DevolveRental/DevolutionRentalController"));
+var _DevolutionRentalController = _interopRequireDefault(require("../../../../modules/rentals/useCases/DevolveRental/DevolutionRentalController"));
 
-var _ListRentalsByUserController = _interopRequireDefault(require("@modules/rentals/useCases/ListRentalsByUser/ListRentalsByUserController"));
+var _ListRentalsByUserController = _interopRequireDefault(require("../../../../modules/rentals/useCases/ListRentalsByUser/ListRentalsByUserController"));
 
 var _ensureAuthenticated = _interopRequireDefault(require("../middlewares/ensureAuthenticated"));
 

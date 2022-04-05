@@ -17,12 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14.x'
-      
-      - name: Enter in correct folder
-        run: cd api-rentx
-        
+
       - name: Install dependencies
-        run: yarn
+        run: cd api-rentx && yarn
         
       - name: Build application
         run: yarn build

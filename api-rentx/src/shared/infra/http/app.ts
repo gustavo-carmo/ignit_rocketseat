@@ -24,6 +24,10 @@ app.use('/car', express.static(`${upload.tmpFolder}/car`));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+app.use('/', (request, response) => {
+  return response.status(200).send('<h1>Application Running</h1>');
+});
+
 app.use(routes);
 
 app.use(

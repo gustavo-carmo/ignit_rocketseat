@@ -1,0 +1,1 @@
+export const static_props_revalidate_timer = 60 * 60 * 24;

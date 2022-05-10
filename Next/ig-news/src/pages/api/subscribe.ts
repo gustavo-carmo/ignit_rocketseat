@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 import { query as q } from "faunadb";
@@ -14,7 +13,10 @@ type User = {
   };
 };
 
-export default async (request: NextApiRequest, response: NextApiResponse) => {
+const subscribe = async (
+  request: NextApiRequest,
+  response: NextApiResponse
+) => {
   try {
     if (request.method === "POST") {
       const session = await getSession({ req: request });
@@ -68,3 +70,5 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     return response.status(500).json({ message: "sorry something happened" });
   }
 };
+
+export default subscribe;

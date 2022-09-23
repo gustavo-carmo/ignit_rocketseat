@@ -50,21 +50,22 @@ If you need that some header or any other html to be included in all pages you n
 
 If you need add a font for exemple in your Next project you need to replace the file \_document in next, in this case you have to create this file into your pages folder and put the code below, this file is quite similar to \_app but it'll be executed only once.
 
-`
+```
 import Document, { Html, Main, Head, NextScript } from "next/document";
 
 export default class MyDocument extends Document {
-render() {
-return (
-
-<Html>
-<Head>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
             rel="stylesheet"
           />
-</Head>
+
+          <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+        </Head>
 
         <body>
           <Main />
@@ -72,10 +73,46 @@ return (
         </body>
       </Html>
     );
-
+  }
 }
-}
 
-`
+```
 
 You can't add css on \_document because it's not ready to acept it, this code is to close to pure html
+
+Every time that you want to execute a server side rendering function you have to export a function on your page (It only works on pages) with the name getServerSideProps and to access the return of the function you get the props on the page, so if you execute this server side rendering function:
+
+```
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      name: "Gustavo",
+    },
+  };
+};
+```
+
+on the props you will have an object like this:
+
+```
+{
+  name: "Gustavo",
+}
+```
+
+one project adevice is use the values in the bank as cents then you convert it to decimal, because you wont have to worry about the decimal houses.
+
+### Another way to execute server side functions is the Static Site Generation (SSG)
+
+It's very similar to Server Side Rendering but it'll execute once than it will save the HTML generated and every time it will give to the browser and will only refresh the content when its the time to revalidate. This way is performaticly but it isn't all time that you'll use it, and it's function is like this:
+
+```
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      name: "Gustavo",
+    },
+    revalidate: 60 * 60 * 24, //24 hours
+  };
+};
+```

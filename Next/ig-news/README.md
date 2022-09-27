@@ -116,3 +116,44 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 ```
+
+## API Routes
+
+On NextJs you can add routes to use as you could do on a pure node server, on your pages folder you have to add a folder called "api" and inside it every file will be an api and you have to have the sintaxe bellow to use this api.
+
+```
+import { NextApiRequest, NextApiResponse } from "next";
+
+const usersApi = (request: NextApiRequest, response: NextApiResponse) => {
+  const users = [
+    { id: 1, name: "Lulu Gutierrez" },
+    { id: 2, name: "Lina Jackson" },
+    { id: 3, name: "Rachel Wilkerson" },
+    { id: 4, name: "Fanny Peters" },
+  ];
+
+  return response.json(users);
+};
+
+export default usersApi;
+```
+
+To recieve parameters on the next api you should create an folter inside the folder "api" and create an file into that folder with the name "[<parameter-name>].tsx" where you have to change the <parameter-name> to the name of the parameter that you want then you will recieve it on the request.query for example if I want to recieve the parameter id on users I will create an folder called "users" and into this the file "[id].tsx" and inside it I will recieve the value like this:
+
+```
+import { NextApiRequest, NextApiResponse } from "next";
+
+const usersApi = (request: NextApiRequest, response: NextApiResponse) => {
+  console.log(request.query); // { id: '1' }
+
+  <some-return>
+};
+
+export default usersApi;
+
+```
+
+To recieve more than one parameter you have to create an file with this sintaxe "[...parameters].ts" and you will have an array with all the parameters on that route.
+
+JWT (Storage)
+Next Auth (Login Social "GitHub", "Google")

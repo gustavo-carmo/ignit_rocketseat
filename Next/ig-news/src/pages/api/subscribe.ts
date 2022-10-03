@@ -13,9 +13,16 @@ interface User {
   };
 }
 
+interface Session {
+  user: {
+    email: string;
+  };
+}
+
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === "POST") {
-    const session = await getSession({ req: request });
+    const data = await getSession({ req: request });
+    const session = data.session as Session;
 
     const user = await faunadb.query<User>(
       q.Get(q.Match(q.Index("user_by_email"), q.Casefold(session.user.email)))

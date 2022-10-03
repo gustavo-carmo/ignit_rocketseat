@@ -3,8 +3,15 @@ import { FaGithub } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+interface Session {
+  user: {
+    name: string;
+  };
+}
+
 export function SignInButton() {
-  const { data: session } = useSession();
+  const { data } = useSession();
+  const session = data?.session as Session;
 
   return session ? (
     <button
@@ -13,7 +20,7 @@ export function SignInButton() {
       onClick={() => signOut()}
     >
       <FaGithub color="#04d361" />
-      {session.user.name}
+      {session?.user?.name}
       <FiX color="#737380" className={styles.closeIcon} />
     </button>
   ) : (

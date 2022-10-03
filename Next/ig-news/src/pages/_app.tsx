@@ -19,4 +19,24 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   );
 }
 
+/*
+function MyApp({ Component, pageProps }: MyAppProps) {
+  return (
+    <PrismicProvider
+      internalLinkComponent={({ href, ...props }) => (
+        <Link href={href}>
+          <a {...props} />
+        </Link>
+      )}
+    >
+      <SessionProvider session={pageProps.session}>
+        <PrismicPreview repositoryName={repositoryName}>
+          <Header />
+          <Component {...pageProps} />
+        </PrismicPreview>
+      </SessionProvider>
+    </PrismicProvider>
+  );
+}
+*/
 export default MyApp;

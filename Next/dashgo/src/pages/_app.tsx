@@ -1,15 +1,15 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { SidebarDrawerProvider } from "../contexts/SidebarDrawerContext";
 import { mirageServer } from "../services/mirage";
+import { queryClient } from "../services/react-query/queryClient";
 import { theme } from "../styles/theme";
 
 if (process.env.NODE_ENV === 'development') {
   mirageServer();
 }
 
-const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   return (

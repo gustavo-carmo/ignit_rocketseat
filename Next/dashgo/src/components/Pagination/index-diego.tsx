@@ -10,19 +10,27 @@ type PaginationProps = {
 
 const siblingsCount = 1;
 
+function generatePagesArray(from: number, to: number) {
+  return [...new Array(to - from)]
+    .map((_, index) => {
+      return index + 1 + from;
+    }).filter(page => page > 0);
+}
+
 
 export function Pagination({ currentPage = 1, totalCountOfRegisters, totalPerPage = 10, onPageChange }: PaginationProps) {
   const lastPage = Math.ceil(totalCountOfRegisters / totalPerPage);
   const pageStart = ((currentPage - 1) * totalPerPage) + 1;
   const pageEnd = currentPage === lastPage ? totalCountOfRegisters : currentPage * totalPerPage;
 
-  const pagesBefore = [...new Array(siblingsCount)].map((_, index) => {
-    return currentPage + index - siblingsCount;
-  }).filter(page => page > 0);
+  const previousPages = currentPage > 1 ?
+    generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1) :
+    []
 
-  const pagesAfter = [...new Array(siblingsCount)].map((_, index) => {
-    return currentPage + index + 1;
-  }).filter(page => page <= lastPage);
+  const nextPages = currentPage < lastPage ?
+    generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage)) :
+    [];
+
 
 
   return (
@@ -33,29 +41,30 @@ export function Pagination({ currentPage = 1, totalCountOfRegisters, totalPerPag
       </Box>
       <Stack direction="row" spacing="2">
 
-        {currentPage - siblingsCount > 1 && (
+        {(1 + siblingsCount) < currentPage && (
           <>
             <PaginationButton onPageChange={onPageChange} number={1} />
-            {currentPage - siblingsCount > 2 && (
-              <Text color="gray.300" width="6" textAlign="center" alignSelf="flex-end">...</Text>
+            {currentPage > (2 + siblingsCount) && (
+              <Text color="gray.300" width="8" textAlign="center" alignSelf="flex-end">...</Text>
             )}
           </>
         )}
 
-        {pagesBefore.map(page => (
-          <PaginationButton key={page} onPageChange={onPageChange} number={page} />
+        { previousPages.length > 0 && previousPages.map(page => (
+          <PaginationButton onPageChange={onPageChange} key={page} number={page} />
         ))}
 
         <PaginationButton onPageChange={onPageChange} number={currentPage} isCurrentPage={true} />
 
-        {pagesAfter.map(page => (
-          <PaginationButton key={page} onPageChange={onPageChange} number={page} />
+
+        { nextPages.length > 0 && nextPages.map(page => (
+          <PaginationButton onPageChange={onPageChange} key={page} number={page} />
         ))}
 
         {currentPage + siblingsCount < lastPage && (
           <>
-            {currentPage + siblingsCount - 1 < lastPage && (
-              <Text color="gray.300" width="6" textAlign="center" alignSelf="flex-end">...</Text>
+            {(currentPage + 1 + siblingsCount) < lastPage && (
+              <Text color="gray.300" width="8" textAlign="center" alignSelf="flex-end">...</Text>
             )}
             <PaginationButton onPageChange={onPageChange} number={lastPage} />
           </>

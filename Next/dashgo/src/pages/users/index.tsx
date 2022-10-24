@@ -16,46 +16,35 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { useQuery } from "react-query";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
-}
+import { default_stale_time } from "../../config/reactQuery";
+import { api } from "../../services/api";
+import { useUsers } from "../../services/hooks/useUsers";
+import { queryClient } from "../../services/react-query/queryClient";
 
 export default function ListUser() {
-  const { data, isLoading, error } = useQuery<User[]>('users', async () => {
-    const response = await fetch('https://localhost:3000/api/users');
-    const data = await response.json();
-
-    const users = data.users.map(user => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-br', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        })
-      }
-    });
-
-    return users;
-  }, {
-    staleTime: 1000 * 10, // 10 seconds
-  });
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching, error } = useUsers(page);
 
   const isWideVersionMedium = useBreakpointValue({
     base: false,
     md: true
   });
+
+  async function handlePrefetchUser(user_id) {
+    await queryClient.prefetchQuery(['user', user_id], async () => {
+      const response = await api.get(`users/${user_id}`);
+
+      return response.data;
+    },
+    {
+      staleTime: default_stale_time
+    })
+  }
 
   return (
     <Box>
@@ -68,6 +57,7 @@ export default function ListUser() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuários
+              { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" />}
             </Heading>
 
             <Link href="/users/create" passHref>
@@ -105,7 +95,7 @@ export default function ListUser() {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {data.map(user => (
+                    {data.users.map(user => (
                       <Tr key={user.id}>
                         <Td px={["4", "4", "6"]}>
                           <Checkbox colorScheme="pink" />
@@ -126,9 +116,10 @@ export default function ListUser() {
                             fontSize="small"
                             colorScheme="purple"
                             borderRadius="full"
-                            leftIcon={<Icon alignSelf="center" as={RiPencilLine} fontSize="16" />}
+                            onMouseEnter={() => handlePrefetchUser(user.id)}
                           >
-                            {!isWideVersionMedium ?? 'Editar'}
+                            <Icon alignSelf="center" as={RiPencilLine} fontSize="16" mr={isWideVersionMedium ? '1' : ''} />
+                            {isWideVersionMedium ? 'Editar' : '' }
                           </Button>
                         </Td>
                       </Tr>
@@ -136,7 +127,12 @@ export default function ListUser() {
                   </Tbody>
                 </Table>
 
-                <Pagination />
+                <Pagination
+                  currentPage={page}
+                  totalCountOfRegisters={data.totalCount}
+                  totalPerPage={10}
+                  onPageChange={setPage}
+                />
               </>
             )
           }

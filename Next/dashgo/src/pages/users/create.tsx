@@ -15,6 +15,10 @@ import { Sidebar } from "../../components/Sidebar";
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from "react-query";
+import { api } from "../../services/api";
+import { queryClient } from "../../services/react-query/queryClient";
+import { useRouter } from "next/router";
 
 type CreateUserData = {
   name: string;
@@ -31,13 +35,32 @@ const schema = yup.object({
 })
 
 export default function CreateUser() {
+  const router = useRouter();
+
+  const createUser = useMutation(async (user: CreateUserData) => {
+    const response = await api.post("/users", {
+      user: {
+        ...user,
+        created_at: new Date()
+      }
+    });
+
+    return response.data.user;
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+    }
+  })
+
   const { handleSubmit, formState, formState: { errors }, register } = useForm<CreateUserData>({
     resolver: yupResolver(schema)
   });
 
   const handleCreate: SubmitHandler<CreateUserData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log(values);
+
+    await createUser.mutateAsync(values);
+
+    router.push("/users")
   }
 
   return (
